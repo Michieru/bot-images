@@ -33,8 +33,16 @@ for (const file of commandFiles) {
   client.commands.set(command.data.name, command);
 }
 
-client.once(Events.ClientReady, () => {
+client.once(Events.ClientReady, async () => {
   console.log(`Connecté en tant que ${client.user.tag}`);
+
+  // Mettre le bot en statut invisible
+  try {
+    await client.user.setStatus('invisible');
+    console.log('Statut du bot défini sur invisible');
+  } catch (error) {
+    console.error('Erreur lors du changement de statut :', error);
+  }
 });
 
 client.on(Events.InteractionCreate, async interaction => {
