@@ -4,8 +4,8 @@ const path = require('path');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('image')
-    .setDescription('Affiche une image depuis le dossier images')
+    .setName('carte')
+    .setDescription('Affiche une carte')
     .addStringOption(option =>
       option.setName('nom')
         .setDescription("Nom de l'image (sans extension)")
