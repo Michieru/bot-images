@@ -4,7 +4,6 @@ require('dotenv').config();
 
 const TOKEN = process.env.TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
-const GUILD_ID = process.env.GUILD_ID;
 
 async function deployCommands() {
   const commands = [];
@@ -18,18 +17,15 @@ async function deployCommands() {
   const rest = new REST({ version: '10' }).setToken(TOKEN);
 
   try {
-    console.log('Déploiement des commandes slash...');
+    console.log('Déploiement global des commandes slash...');
     await rest.put(
-      Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
+      Routes.applicationCommands(CLIENT_ID), // Déploiement global sans guildId
       { body: commands }
     );
-    console.log('Commandes déployées avec succès.');
+    console.log('Commandes déployées globalement avec succès.');
   } catch (error) {
     console.error('Erreur lors du déploiement des commandes :', error);
   }
 }
 
 module.exports = deployCommands;
-
-// Si vous souhaitez exécuter ce fichier directement (hors Render), décommentez :
-// deployCommands();

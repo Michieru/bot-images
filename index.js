@@ -36,7 +36,7 @@ for (const file of commandFiles) {
 client.once(Events.ClientReady, async () => {
   console.log(`Connecté en tant que ${client.user.tag}`);
 
-  // Mettre le bot en statut invisible
+  // Mettre le bot en statut invisible (optionnel)
   try {
     await client.user.setStatus('invisible');
     console.log('Statut du bot défini sur invisible');
@@ -66,7 +66,7 @@ client.on(Events.InteractionCreate, async interaction => {
   }
 });
 
-// Déploiement des commandes puis connexion du bot
+// Déploiement global des commandes puis connexion du bot
 (async () => {
   await deployCommands();
   client.login(TOKEN);
