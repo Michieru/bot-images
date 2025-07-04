@@ -10,6 +10,14 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+const deployCommands = require('./deploy-commands');
+
+(async () => {
+  await deployCommands(); // fonction exportée qui déploie les commandes
+  client.login(process.env.TOKEN);
+})();
+
+
 // Serveur web minimal pour UptimeRobot
 app.get('/', (req, res) => {
   res.send('Bot Discord en ligne !');
