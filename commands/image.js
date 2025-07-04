@@ -28,12 +28,12 @@ const imageFiles = [
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('image')
-    .setDescription('Affiche une image depuis GitHub')
+    .setName('carte')
+    .setDescription('Affiche une carte')
     .addStringOption(option =>
       option
         .setName('nom')
-        .setDescription('Nom de l\'image')
+        .setDescription('Nom de la carte')
         .setRequired(true)
         .setAutocomplete(true)
     ),
