@@ -5,18 +5,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 
+const deployCommands = require('./deploy-commands');
+
 const TOKEN = process.env.TOKEN;
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-
-const deployCommands = require('./deploy-commands');
-
-(async () => {
-  await deployCommands(); // fonction exportée qui déploie les commandes
-  client.login(process.env.TOKEN);
-})();
-
 
 // Serveur web minimal pour UptimeRobot
 app.get('/', (req, res) => {
@@ -27,10 +21,7 @@ app.listen(PORT, () => {
 });
 
 // Initialisation du client Discord
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds]
-});
-
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
 
 // Chargement des commandes
@@ -49,7 +40,7 @@ client.once(Events.ClientReady, () => {
 client.on(Events.InteractionCreate, async interaction => {
   if (interaction.isAutocomplete()) {
     const command = client.commands.get(interaction.commandName);
-    if (!command || !command.autocomplete) return;
+    if (!command?.autocomplete) return;
     try {
       await command.autocomplete(interaction);
     } catch (error) {
@@ -67,4 +58,8 @@ client.on(Events.InteractionCreate, async interaction => {
   }
 });
 
-client.login(TOKEN);
+// Déploiement des commandes puis connexion du bot
+(async () => {
+  await deployCommands();
+  client.login(TOKEN);
+})();
